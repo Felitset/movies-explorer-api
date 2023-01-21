@@ -5,6 +5,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
+const error = require('./routes/wrong-route');
 
 const PORT = 3000;
 
@@ -34,7 +35,7 @@ app.use(auth);
 app.use('/users', require('./routes/user'));
 app.use('/movies', require('./routes/movie'));
 
-// app.use('*', error);
+app.use('*', error);
 
 app.use(errorLogger);
 
