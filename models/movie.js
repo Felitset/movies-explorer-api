@@ -42,11 +42,11 @@ const movieSchema = new mongoose.Schema({
     ref: 'user',
     required: true,
   },
-  movieId: {
-    // movie id from responce from MovieExplorer server
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-  },
+  // movieId: {
+  //   movie id from responce from MovieExplorer server
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   required: true,
+  // },
   nameRU: {
     type: String,
     required: true,

@@ -17,11 +17,11 @@ router.post('/', celebrate({
     year: Joi.string().required().length(4),
     description: Joi.string().required(),
     image: Joi.string().uri().regex(urlRegex).required(),
-    trailer: Joi.string().uri().regex(urlRegex).required(),
+    trailerLink: Joi.string().uri().regex(urlRegex).required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().uri().regex(urlRegex).required(),
-    movieId: Joi.string().hex().length(24).required(),
+    // movieId: Joi.string().hex().length(24).required(),
   }),
 }), postMovie);
 router.delete('/:movieId', celebrate({
