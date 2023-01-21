@@ -11,7 +11,7 @@ const PORT = 3000;
 
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1:27017/usermoviesdb');
+mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 
 app.use(express.json());
 

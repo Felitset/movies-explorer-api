@@ -1,7 +1,7 @@
 const Movie = require('../models/movie');
 
 const BadRequestError = require('../errors/400-bad-request');
-const AccessError = require('../errors/403-forbidden');
+// const AccessError = require('../errors/403-forbidden');
 const NotFoundError = require('../errors/404-not-found');
 
 const getAllSavedMovies = (req, res, next) => Movie
@@ -21,7 +21,7 @@ const postMovie = async (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
-    // movieId,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -36,7 +36,7 @@ const postMovie = async (req, res, next) => {
       image,
       trailerLink,
       thumbnail,
-      // movieId,
+      movieId,
       nameRU,
       nameEN,
       owner,
@@ -61,15 +61,12 @@ const deleteMovie = (req, res, next) => {
     .findById(movieId)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Карточка не существует');
-      }
-      if (movie.owner.toString() !== req.user._id) {
-        throw new AccessError('Невозможно удалить не свою карточку');
+        throw new NotFoundError('Фильм не существует');
       }
       return movie.deleteOne();
     })
     .then(() => {
-      res.status(200).json({ message: 'Card deleted successfuly' });
+      res.status(200).json({ message: 'Movie deleted successfuly' });
     })
     .catch((err) => {
       if (err.name === 'CastError') {
