@@ -49,6 +49,9 @@ const login = (req, res, next) => {
   User
     .findUserByCredentials(email, password)
     .then((user) => {
+      console.log('-------');
+      console.log(NODE_ENV);
+      console.log('-------');
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
