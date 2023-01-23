@@ -1,7 +1,7 @@
 const Movie = require('../models/movie');
 
 const BadRequestError = require('../errors/400-bad-request');
-// const AccessError = require('../errors/403-forbidden');
+const AccessError = require('../errors/403-forbidden');
 const NotFoundError = require('../errors/404-not-found');
 
 const getAllSavedMovies = (req, res, next) => Movie
@@ -62,6 +62,9 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError('Фильм не существует');
+      }
+      if (movie.owner.toString() !== req.user._id) {
+        throw new AccessError('Невозможно удалить не свою карточку');
       }
       return movie.deleteOne();
     })
