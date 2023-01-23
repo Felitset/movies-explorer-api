@@ -1,7 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+require('dotenv').config();
+
 const { celebrate, Joi, errors } = require('celebrate');
+
+const rateLimit = require('express-rate-limit');
+const helmet = require('helmet');
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 const { login, createUser } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
@@ -10,7 +23,8 @@ const error = require('./routes/wrong-route');
 const PORT = 3000;
 
 const app = express();
-
+app.use(helmet());
+app.use(limiter);
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 
 app.use(express.json());
