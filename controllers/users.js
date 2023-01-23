@@ -49,19 +49,11 @@ const login = (req, res, next) => {
   User
     .findUserByCredentials(email, password)
     .then((user) => {
-      console.log('---1----');
-      console.log(NODE_ENV);
-      console.log('-------');
       const token = jwt.sign(
         { _id: user._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      // const token = jwt.sign(
-      //   { _id: user._id },
-      //   'dev-secret',
-      //   { expiresIn: '7d' },
-      // );
       res.send({ token });
     })
     .catch(next);
