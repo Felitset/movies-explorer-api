@@ -7,7 +7,7 @@ const { errors } = require('celebrate');
 
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
-
+const CONFIG = require('./consts/db-config');
 const { signInSystemValidator, createNewUserValidator } = require('./validators/joi-validation');
 
 const limiter = rateLimit({
@@ -25,12 +25,12 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const error = require('./routes/wrong-route');
 
-const PORT = 3000;
-
 const app = express();
 app.use(helmet());
 
-mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
+const { PORT = CONFIG.PORT, MONGO = CONFIG.MONGO } = process.env;
+
+mongoose.connect(MONGO);
 
 app.use(express.json());
 
