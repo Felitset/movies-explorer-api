@@ -27,7 +27,7 @@ module.exports.postNewMovieValidator = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
-    duration: Joi.string().required(),
+    duration: Joi.number().required(),
     year: Joi.string().required().length(4),
     description: Joi.string().required(),
     image: Joi.string().uri().regex(urlRegex).required(),
@@ -35,7 +35,7 @@ module.exports.postNewMovieValidator = celebrate({
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().uri().regex(urlRegex).required(),
-    movieId: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 });
 

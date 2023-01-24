@@ -26,12 +26,13 @@ const PORT = 3000;
 
 const app = express();
 app.use(helmet());
-app.use(limiter);
+
 mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb');
 
 app.use(express.json());
 
 app.use(requestLogger);
+app.use(limiter);
 
 const allowedCors = [
   'https://praktikum.tk',
