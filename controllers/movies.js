@@ -4,6 +4,13 @@ const BadRequestError = require('../errors/400-bad-request');
 const AccessError = require('../errors/403-forbidden');
 const NotFoundError = require('../errors/404-not-found');
 
+const {
+  unableToDelete,
+  wrongData,
+  dbValidationError,
+  nonExistingMovie,
+} = require('../consts/error-messages');
+
 const getAllSavedMovies = (req, res, next) => Movie
   .find({})
   .then((movies) => {
@@ -43,7 +50,7 @@ const postMovie = async (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'ValidatonError') {
-        next(new BadRequestError('Error DB validation'));
+        next(new BadRequestError(dbValidationError));
       } else {
         next(err);
       }
@@ -61,10 +68,10 @@ const deleteMovie = (req, res, next) => {
     .findById(movieId)
     .then((movie) => {
       if (!movie) {
-        throw new NotFoundError('Фильм не существует');
+        throw new NotFoundError(nonExistingMovie);
       }
       if (movie.owner.toString() !== req.user._id) {
-        throw new AccessError('Невозможно удалить не свою карточку');
+        throw new AccessError(unableToDelete);
       }
       return movie.deleteOne();
     })
@@ -73,7 +80,7 @@ const deleteMovie = (req, res, next) => {
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError('WrongData'));
+        next(new BadRequestError(wrongData));
       } else {
         next(err);
       }

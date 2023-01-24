@@ -18,6 +18,9 @@ const limiter = rateLimit({
 });
 
 const { login, createUser } = require('./controllers/users');
+
+const { serverError } = require('./consts/error-messages');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const auth = require('./middlewares/auth');
 const error = require('./routes/wrong-route');
@@ -76,7 +79,7 @@ app.use((err, req, res, next) => {
     .status(statusCode)
     .send({
       message: statusCode === 500
-        ? 'На сервере произошла ошибка'
+        ? serverError
         : message,
     });
   next();
