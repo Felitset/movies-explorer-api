@@ -24,6 +24,7 @@ const postMovie = async (req, res, next) => {
     director,
     duration,
     year,
+    image,
     description,
     trailerLink,
     thumbnail,
@@ -31,7 +32,6 @@ const postMovie = async (req, res, next) => {
     nameRU,
     nameEN,
   } = req.body;
-  const image = req.body.image.url;
   const owner = req.user._id;
   const movie = await Movie
     .create({
