@@ -12,7 +12,7 @@ const {
 } = require('../consts/error-messages');
 
 const getAllSavedMovies = (req, res, next) => Movie
-  .find({})
+  .find({ owner: req.user._id })
   .then((movies) => {
     res.json(movies);
   })
